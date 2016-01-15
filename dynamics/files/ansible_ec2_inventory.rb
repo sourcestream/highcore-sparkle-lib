@@ -1,6 +1,9 @@
 SparkleFormation.dynamic(:files_ansible_ec2_inventory) do | id, config = {} |
 
-  set!('/etc/ansible/ec2.ini') do
+  config[:config_path] ||= '/etc/ansible/ec2.ini'
+  config[:script_path] ||= '/etc/ansible/ec2.py'
+
+  set!(config[:config_path]) do
     content join!([
 "[ec2]\n",
 "regions = ", config[:region], "\n",
@@ -32,7 +35,7 @@ SparkleFormation.dynamic(:files_ansible_ec2_inventory) do | id, config = {} |
     mode "000755"
   end
 
-  set!('/etc/ansible/ec2.py') do
+  set!(config[:script_path]) do
     content join!([
 "#!/usr/bin/env python\n",
 "\n",
