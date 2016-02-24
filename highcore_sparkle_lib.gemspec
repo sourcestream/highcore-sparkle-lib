@@ -2,7 +2,7 @@ $LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__)) + '/lib/'
 
 Gem::Specification.new do |s|
   s.name               = "highcore_sparkle_lib"
-  s.version            = "0.0.5"
+  s.version            = "0.0.6"
 
   s.authors = ["Aleksandr Saraikin"]
   s.date = %q{2015-11-14}

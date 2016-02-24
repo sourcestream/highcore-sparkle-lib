@@ -1,5 +1,7 @@
 SparkleFormation.dynamic(:files_ansible_provision) do | id, config = {} |
 
+  config[:force] = true unless config.has_key? :force
+
   if config[:repository].is_a?(Hash) || config[:repository].end_with?('.git')
     set!('/usr/bin/ansible-provision') do
       content join!([
@@ -12,7 +14,7 @@ SparkleFormation.dynamic(:files_ansible_provision) do | id, config = {} |
                         "\n",
                         "ansible-generate-vars\n",
                         "\n",
-                        "[ -f requirements.yml ] && ansible-galaxy install --force -r requirements.yml\n",
+                        "[ -f requirements.yml ] && ansible-galaxy install#{' --force' if config[:force]} -r requirements.yml\n",
                         "[ -f /root/.ansible_vault_password ] && export VAULT_PASSWORD_FILE='--vault-password-file /root/.ansible_vault_password'\n",
                         "HOST=`ec2metadata | grep local-hostname | cut -d ' ' -f2`\n",
                         "EC2_INI_PATH=/etc/ansible/ec2.ini ansible-playbook --limit $HOST -c local -i /etc/ansible/ec2.py ",
@@ -49,7 +51,7 @@ SparkleFormation.dynamic(:files_ansible_provision) do | id, config = {} |
         "ansible-generate-vars",
         "\n",
         "cd /root/playbooks/\n",
-        "[ -f requirements.yml ] && ansible-galaxy install --force -r requirements.yml\n",
+        "[ -f requirements.yml ] && ansible-galaxy install#{' --force' if config[:force]} -r requirements.yml\n",
         "[ -f /root/.ansible_vault_password ] && export VAULT_PASSWORD_FILE='--vault-password-file /root/.ansible_vault_password'\n",
         "HOST=`ec2metadata | grep local-hostname | cut -d ' ' -f2`\n",
         "EC2_INI_PATH=/etc/ansible/ec2.ini ansible-playbook --limit $HOST -c local -i /etc/ansible/ec2.py ",
