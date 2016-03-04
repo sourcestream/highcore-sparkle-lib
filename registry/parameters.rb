@@ -58,6 +58,7 @@ SparkleFormation::Registry.register(:parameters) do | config = {} |
   aws_params = {}
   config[:components].each { | id, component |
     aws_params.merge!(to_aws_parameters(id, component[:parameters], config[:compiled_template])) {|k, x, y| x.merge(y)}
+    aws_params.merge!(to_aws_parameters(:"#{id}_output", component[:outputs], config[:compiled_template])) if component[:outputs]
   }
 
   set!(:parameters, aws_params)
