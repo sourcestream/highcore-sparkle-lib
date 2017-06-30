@@ -6,7 +6,7 @@ SparkleFormation::Registry.register(:instance_user_data) do | id, resource = id,
     signal = [
         "/usr/local/bin/cfn-signal -e $? ",
         " --stack ", _stack_name,
-        " --resource ", SparkleFormation.camel(resource),
+        " --resource ", ::SparkleFormation::camel(resource),
         " --region ", _region, "\n",]
   end
 
@@ -26,7 +26,7 @@ SparkleFormation::Registry.register(:instance_user_data) do | id, resource = id,
 
       "/usr/local/bin/cfn-init -v ",
       " --stack ", _stack_name,
-      " --resource ", SparkleFormation.camel(id),
+      " --resource ", ::SparkleFormation::camel(id),
       " --region ", _region, "\n",
 
       *signal

@@ -4,7 +4,7 @@ SparkleFormation::Registry.register(:parameters) do | config = {} |
     aws_params = {}
     parameters.each do | id, parameter|
       aws_id = parameter[:level] == 'component' ? :"#{component_id}_#{parameter[:id]}" : id
-      next unless compiled_template.include? ('{"Ref":"' + SparkleFormation.camel(aws_id) + '"}') or
+      next unless compiled_template.include? ('{"Ref":"' + ::SparkleFormation.camel("#{aws_id}") + '"}') or
         (parameter[:sensitive] and parameter[:value] and parameter[:type])
       aws_parameter = parameter.clone
       aws_parameter[:type] = aws_parameter[:aws_type] if aws_parameter[:aws_type]

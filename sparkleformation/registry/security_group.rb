@@ -9,7 +9,7 @@ SparkleFormation::Registry.register(:security_group) do | id, config = {} |
     }
   end
 
-  dynamic!(:security_group, id,
+  dynamic!(:ec2_security_group, id, :resource_name_suffix => :security_group,
       :group_description => "#{id} security group",
       :security_group_ingress => config[:rules] ? _array(*config[:rules]) : nil,
       :vpc_id => config[:vpc_id] || ref!(:vpc_id)

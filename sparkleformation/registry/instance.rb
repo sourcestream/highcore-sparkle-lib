@@ -3,7 +3,7 @@ SparkleFormation::Registry.register(:instance) do |id, config={}|
   config[:tags][:Name] = join!(_stack_name, '-', id)
   if config[:depends_on]
     config[:depends_on].map! { |dependency|
-      SparkleFormation.camel(dependency)
+      ::SparkleFormation.camel(dependency)
     }
   else
     config[:depends_on] = []
